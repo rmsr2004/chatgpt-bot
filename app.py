@@ -18,10 +18,13 @@ def main():
         Você é um assistente virtual.
         Responda apenas em Português.
 
+        Histórico da conversa:
+        {chat_history}
+
         Input: {input}
     """
 
-    base_prompt = PromptTemplate(input_variables=["input"], template=template)
+    base_prompt = PromptTemplate(input_variables=["input", "chat_history"], template=template)
 
     llm = ChatGroq(model_name='llama3-8b-8192', api_key=os.getenv("API_KEY"))
 
