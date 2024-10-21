@@ -3,7 +3,10 @@ from langchain_groq import ChatGroq
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-import os, sys, signal
+from colorama import init, Fore, Style
+import os, sys, signal, platform
+
+init(autoreset=True)
 
 def signal_handler(sig, frame):
     print('\nExiting...')
@@ -32,16 +35,24 @@ def main():
 
     llm_chain = LLMChain(llm=llm, memory=memory, prompt=base_prompt)
 
-    os.system("clear")
+    # Clean the terminal
+    if platform.system() == 'Windows': 
+        os.system("cls") 
+    else:
+        os.system("clear")
 
     user_input = None
 
-    print("Olá! Eu sou um assistente virtual. Como posso te ajudar?")
+    print(f"{Fore.GREEN}Olá! Eu sou um assistente virtual. Como posso te ajudar?{Style.RESET_ALL}")
 
     while user_input != "exit":
-        user_input = input("-> ")
+        terminal_witdh = os.get_terminal_size().columns # Get the terminal width
+        
+        user_input = input(f"{Fore.BLUE}-> {Style.RESET_ALL}")
         response = llm_chain.invoke(input=user_input)
-        print(f"\n{response['text']}\n")
+
+        print(f"\n{Fore.YELLOW}Assistente -> {Style.RESET_ALL}{Fore.CYAN}{response['text']}{Style.RESET_ALL}\n")
+        print(f"{Fore.MAGENTA}{'-'*terminal_witdh}{Style.RESET_ALL}\n")
 
 if __name__ == "__main__":
     main()
