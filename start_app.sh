@@ -2,7 +2,7 @@
 
 # Script to run chatbot-cli
 
-cd ~/Documentos/chatgpt-bot/
+cd ~/.scripts/chatgpt-bot/
 
 source .venv/bin/activate
 
